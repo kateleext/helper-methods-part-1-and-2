@@ -1,8 +1,7 @@
 class MoviesController < ApplicationController
   def new
     @the_movie = Movie.new
-
-    render template: "movies/new"
+    render "movies/new"
   end
 
   def index
@@ -16,7 +15,7 @@ class MoviesController < ApplicationController
       end
 
       format.html do
-        render({ template: "movies/index" })
+        render "movies/index"
       end
     end
   end
@@ -28,7 +27,7 @@ class MoviesController < ApplicationController
 
     @the_movie = matching_movies.first
 
-    render({ template: "movies/show" })
+    render "movies/show"
   end
 
   def create
@@ -38,9 +37,9 @@ class MoviesController < ApplicationController
 
     if @the_movie.valid?
       @the_movie.save
-      redirect_to("/movies", { notice: "Movie was successfully created." })
+      redirect_to(movies_url, { notice: "Movie was successfully created." })
     else
-      render template: "movies/new"
+      render "movies/new"
     end
   end
 
@@ -51,7 +50,7 @@ class MoviesController < ApplicationController
 
     @the_movie = matching_movies.first
 
-    render({ template: "movies/edit" })
+    render "movies/edit"
   end
 
   def update
@@ -63,9 +62,9 @@ class MoviesController < ApplicationController
 
     if the_movie.valid?
       the_movie.save
-      redirect_to("/movies/#{the_movie.id}", { notice: "Movie updated successfully." })
+      redirect_to(movie_url(the_movie), { notice: "Movie updated successfully." })
     else
-      redirect_to("/movies/#{the_movie.id}", { alert: "Movie failed to update successfully." })
+      redirect_to(movie_url(the_movie), { alert: "Movie failed to update successfully." })
     end
   end
 
@@ -75,6 +74,6 @@ class MoviesController < ApplicationController
 
     the_movie.destroy
 
-    redirect_to("/movies", { notice: "Movie deleted successfully." })
+    redirect_to(movies_url, { notice: "Movie deleted successfully." })
   end
 end
